@@ -22,8 +22,8 @@
 				<noteitemview my-draggable></noteitemview>
 			</div>
 		</div>
-		<input type="checkbox" ng-mogel="showarchive">Show archive
-		<div ng-show="!showarchive" class="noteList">
+		<input type="checkbox" ng-model="showarchive">Show archive
+		<div ng-show="showarchive">
 		Archive:
 			<div class="noteItem" ng-repeat="note in archivednotes track by $index">
 				<archivednoteitemview my-draggable></archivednoteitemview>

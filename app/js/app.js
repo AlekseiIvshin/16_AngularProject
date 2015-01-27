@@ -13,7 +13,6 @@
 				$scope.notes.splice(noteIndex,1);
 			}
 			
-			
 			$scope.setToArchive = function(noteIndex) {
 				var id = archive.set($scope.notes[noteIndex]);
 				if(!angular.isUndefined(id)){
@@ -22,12 +21,11 @@
 			}
 		}]) 
 		.controller('ArchiveController',['$scope','archive',function($scope,archive){			
-			$scope.archivedNotesCount = 0;
+			
 			$scope.archivednotes = [];
 			$scope.getArchivedNotesCount = function(){
 				return archive.getCount();
-			}		
-			
+			}			
 			
 			$scope.setToActive = function(noteIndex){
 				var pulledNote = archive.get(noteIndex);
@@ -37,18 +35,21 @@
 				$scope.archivedNotesCount = $scope.getArchivedNotesCount();
 				$scope.archivednotes = $scope.getArchivedNotes();
 			}
+			
 			$scope.getArchivedNotes = function(){
 				return archive.fetchAll();
 			}
-			$scope.$watch('notes',function(){
-				$scope.archivedNotesCount = 0;
+			
+			$scope.$watch('archivednotes',function(){
 				$scope.archivednotes = $scope.getArchivedNotes();
-				$scope.getArchivedNotesCount();
+				$scope.archivedNotesCount = $scope.getArchivedNotesCount();
 			});
 			
 			$scope.removeArchivedNote = function(noteIndex){
 				$scope.archivednotes.splice(noteIndex,1);
 			}
+			
+			$scope.archivedNotesCount = $scope.getArchivedNotesCount();
 		}])
 		.factory('archive',function(){
 			var _archivedNotes = [];
