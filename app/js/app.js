@@ -31,7 +31,11 @@
 				var pulledNote = archive.get(noteIndex);
 				if(!angular.isUndefined(pulledNote)){
 					$scope.notes.push(pulledNote);
+					$scope.refreshArchived();
 				}
+			}
+			
+			$scope.refreshArchived = function(){
 				$scope.archivedNotesCount = $scope.getArchivedNotesCount();
 				$scope.archivednotes = $scope.getArchivedNotes();
 			}
@@ -41,8 +45,7 @@
 			}
 			
 			$scope.$watch('archivednotes',function(){
-				$scope.archivednotes = $scope.getArchivedNotes();
-				$scope.archivedNotesCount = $scope.getArchivedNotesCount();
+					$scope.refreshArchived();
 			});
 			
 			$scope.removeArchivedNote = function(noteIndex){

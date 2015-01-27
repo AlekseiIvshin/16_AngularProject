@@ -11,7 +11,7 @@
   <section>
 	<div ng-controller="NoteController">
 		<form class="noteForm">
-			<div><input type="submit" ng-click="addNote(note)" ng-disabled="!(note.title && note.body)"/></div>
+			<div><input type="submit" ng-click="addNote(note)" ng-disabled="!(note.title && note.body)" value="Create"/></div>
 			<div><input type="text" ng-model="note.title" placeholder="Enter note title"/></div>
 			<div><textarea ng-model="note.body" placeholder="Enter note body"></textarea></div>
 		</form>
