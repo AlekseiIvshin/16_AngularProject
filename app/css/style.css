@@ -1,0 +1,13 @@
+.button{
+	width: 30px;
+	height: 30px;
+	padding: auto;
+	font-size: 20pt;
+	color: white;
+	padding:10px;
+    text-transform: capitalize;
+}
+
+.remove{
+	background-color:red;
+}

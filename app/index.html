@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html ng-app="noteModule" ng-strict-di="">
+
+  <head>
+    <link rel="stylesheet" href="css/style.css" />
+    <script src="lib/angular/angular.min.js"></script>
+    <script src="js/app.js"></script>
+  </head>
+
+  <body>
+  
+  <section>
+	<div ng-controller="NoteController">
+		<form class="noteForm">
+			<input type="text" ng-model="note.title"/>
+			<input type="textarea" ng-model="note.body"/>
+			<input type="submit" ng-click="addNote(note)" ng-disabled="!(note.title || note.body)"/>
+		</form>
+		<div class="notesList">
+			<div class="noteItem" ng-repeat="note in notes track by $index">
+				<div class="noteItemTitle">{{note.date|date:'HH:mm:ss'}}</div>
+				<div class="noteItemTitle">{{note.title}}</div>
+				<div class="noteItemBody">{{note.body}}</div>
+				<div ng-click="removeNote($index)" class="remove button">x</div>
+			</div>
+		</div>
+	</div>
+  </section>
+  </body>
+
+</html>
