@@ -1,7 +1,7 @@
 (function(angular){
 	'use strict';
 	angular.module('noteModule',[])
-		.controller('NoteController',['$scope',function($scope){
+		.controller('NoteController',['$scope','archive',function($scope,archive){
 			$scope.notes = [];
 			$scope.addNote = function(note){
 				note.date = new Date();
@@ -12,11 +12,77 @@
 			$scope.removeNote = function(noteIndex){
 				$scope.notes.splice(noteIndex,1);
 			}
+			
+			
+			$scope.setToArchive = function(noteIndex) {
+				var id = archive.set($scope.notes[noteIndex]);
+				if(!angular.isUndefined(id)){
+					$scope.removeNote();
+				}
+			}
+		}]) 
+		.controller('ArchiveController',['$scope','archive',function($scope,archive){			
+			$scope.archivedNotesCount = 0;
+			$scope.archivednotes = [];
+			$scope.getArchivedNotesCount = function(){
+				return archive.getCount();
+			}		
+			
+			
+			$scope.setToActive = function(noteIndex){
+				var pulledNote = archive.get(noteIndex);
+				if(!angular.isUndefined(pulledNote)){
+					$scope.notes.push(pulledNote);
+				}
+				$scope.archivedNotesCount = $scope.getArchivedNotesCount();
+				$scope.archivednotes = $scope.getArchivedNotes();
+			}
+			$scope.getArchivedNotes = function(){
+				return archive.fetchAll();
+			}
+			$scope.$watch('notes',function(){
+				$scope.archivedNotesCount = 0;
+				$scope.archivednotes = $scope.getArchivedNotes();
+				$scope.getArchivedNotesCount();
+			});
+			
+			$scope.removeArchivedNote = function(noteIndex){
+				$scope.archivednotes.splice(noteIndex,1);
+			}
 		}])
+		.factory('archive',function(){
+			var _archivedNotes = [];
+			return {
+				set: function(note){
+					var index = _archivedNotes.length;
+					_archivedNotes[index] = note;
+					return index;
+				},
+				get: function(index) {
+					var note = _archivedNotes[index];
+					if(!angular.isUndefined(note)){
+						_archivedNotes.splice(index,1);
+						return note;
+					}
+				},
+				fetchAll: function(index) {
+					return _archivedNotes;
+				},
+				getCount: function(){
+					return _archivedNotes.length;
+				}
+			}
+		})
 		.directive('noteitemview',function(){
 			return {
 				restrict: 'E',
 				templateUrl: 'templates/note.tpl.html'
+			}
+		})
+		.directive('archivednoteitemview',function(){
+			return {
+				restrict: 'E',
+				templateUrl: 'templates/archived.note.tpl.html'
 			}
 		})
 		.directive('myDraggable',['$document',function($document){

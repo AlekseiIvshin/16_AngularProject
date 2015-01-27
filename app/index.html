@@ -3,7 +3,7 @@
 
   <head>
     <link rel="stylesheet" href="css/style.css" />
-    <script src="lib/angular/angular.min.js"></script>
+    <script src="lib/angular/angular.js"></script>
     <script src="js/app.js"></script>
   </head>
 
@@ -15,10 +15,20 @@
 			<div><input type="text" ng-model="note.title" placeholder="Enter note title"/></div>
 			<div><textarea ng-model="note.body" placeholder="Enter note body"></textarea></div>
 		</form>
+		<div class="archiveArea" ng-controller="ArchiveController">
+		<div>Archived: {{archivedNotesCount}}</div>
 		<div class="notesList">
 			<div class="noteItem" ng-repeat="note in notes track by $index">
 				<noteitemview my-draggable></noteitemview>
 			</div>
+		</div>
+		<input type="checkbox" ng-mogel="showarchive">Show archive
+		<div ng-show="!showarchive" class="noteList">
+		Archive:
+			<div class="noteItem" ng-repeat="note in archivednotes track by $index">
+				<archivednoteitemview my-draggable></archivednoteitemview>
+			</div>
+		</div>
 		</div>
 	</div>
   </section>
