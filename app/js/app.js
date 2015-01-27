@@ -16,7 +16,7 @@
 		.directive('noteitemview',function(){
 			return {
 				restrict: 'E',
-				template: "<div class=\"noteItemView\"><div class=\"noteItemTitle\">{{note.date|date:'HH:mm:ss'}}</div><div class=\"noteItemTitle\">{{note.title}}</div><div class=\"noteItemBody\">{{note.body}}</div><div ng-click=\"removeNote($index)\" class=\"remove button\">x</div></div>",
+				templateUrl: 'templates/note.tpl.html'
 			}
 		})
 		.directive('myDraggable',['$document',function($document){
