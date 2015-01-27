@@ -11,3 +11,10 @@
 .remove{
 	background-color:red;
 }
+
+.noteItemView {
+	border: 1px solid #F9A825;
+	background-color: #FBC02D;
+	font-size: 16pt;
+	color: white;
+}

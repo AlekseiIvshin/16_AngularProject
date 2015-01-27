@@ -12,16 +12,13 @@
   <section>
 	<div ng-controller="NoteController">
 		<form class="noteForm">
-			<input type="text" ng-model="note.title"/>
-			<input type="textarea" ng-model="note.body"/>
-			<input type="submit" ng-click="addNote(note)" ng-disabled="!(note.title || note.body)"/>
+			<div><input type="submit" ng-click="addNote(note)" ng-disabled="!(note.title || note.body)"/></div>
+			<div><input type="text" ng-model="note.title" placeholder="Enter note title"/></div>
+			<div><textarea ng-model="note.body" placeholder="Enter note body"></textarea></div>
 		</form>
 		<div class="notesList">
 			<div class="noteItem" ng-repeat="note in notes track by $index">
-				<div class="noteItemTitle">{{note.date|date:'HH:mm:ss'}}</div>
-				<div class="noteItemTitle">{{note.title}}</div>
-				<div class="noteItemBody">{{note.body}}</div>
-				<div ng-click="removeNote($index)" class="remove button">x</div>
+				<noteitemview my-draggable></noteitemview>
 			</div>
 		</div>
 	</div>

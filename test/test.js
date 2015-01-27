@@ -8,6 +8,7 @@ describe('NoteController test suite', function(){
 	beforeEach(inject(function(_$rootScope_,_$controller_){
 		$rootScope = _$rootScope_;
 		$controller = _$controller_('NoteController',{'$scope': $rootScope});
+		spyOn($rootScope,'removeNote').and.callThrough();
 	}));
 	
 	it('notes list should by empty on load',function(){
@@ -24,5 +25,6 @@ describe('NoteController test suite', function(){
 		expect($rootScope.notes.length).toEqual(1);
 		$rootScope.removeNote(0);
 		expect($rootScope.notes.length).toEqual(0);
+		expect($rootScope.removeNote.calls.count()).toEqual(1);
 	});
 });
