@@ -37,4 +37,29 @@ describe('NoteController test suite', function(){
 		expect(archive.set).toHaveBeenCalled();
 	}));
 	
+	describe('NoteController test suite wiht httpBackend',function(){
+		var levelsData = ["high","medium","low"];
+		var $httpBackend,$rootScope,$controller,request;
+		//beforeEach(module(moduleName));
+		
+		beforeEach(inject(function(_$httpBackend_,_$controller_,_$rootScope_){
+			$httpBackend = _$httpBackend_;
+			$rootScope = _$rootScope_;
+			$controller = _$controller_('NoteController',{'$scope':$rootScope});
+			request = $httpBackend.when('GET','data/data.json')
+				.respond({"level":levelsData});
+		}));
+		
+		afterEach(function(){
+			$httpBackend.verifyNoOutstandingExpectation();
+			$httpBackend.verifyNoOutstandingRequest();
+		});
+	
+		it('should get level from json data',inject(function($httpBackend){
+			$rootScope.fetchLevels();
+			$httpBackend.flush();
+			expect($rootScope.levels).toEqual(levelsData);
+		}));
+	
+	});
 });

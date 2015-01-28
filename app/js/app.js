@@ -1,7 +1,7 @@
 (function(angular){
 	'use strict';
 	angular.module('noteModule',[])
-		.controller('NoteController',['$scope','archive',function($scope,archive){
+		.controller('NoteController',['$scope','archive','$http',function($scope,archive,$http){
 			$scope.notes = [];
 			$scope.addNote = function(note){
 				note.date = new Date();
@@ -16,9 +16,18 @@
 			$scope.setToArchive = function(noteIndex) {
 				var id = archive.set($scope.notes[noteIndex]);
 				if(!angular.isUndefined(id)){
-					$scope.removeNote();
+					$scope.removeNote(noteIndex);
 				}
 			}
+			
+			$scope.fetchLevels = function(){
+				$http.get('data/data.json')
+					.success(function(data){
+						$scope.levels = data.level;
+					})
+			}
+			
+			$scope.fetchLevels();
 		}]) 
 		.controller('ArchiveController',['$scope','archive',function($scope,archive){			
 			
